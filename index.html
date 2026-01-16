@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reforma - Janeiro 2026</title>
+    <!-- Carregando Chart.js para gráficos interativos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Carregando Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* --- Live Style Guide --- */
+        :root {
+            /* --- Atmosfera (Backgrounds) --- */
+            --live-deep: #06192a;
+            
+            /* --- Superfícies (Refractive Glass) --- */
+            --live-glass: rgba(10, 36, 61, 0.70);
+            --live-glass-hover: rgba(15, 45, 75, 0.85);
+            --glass-blur: blur(16px) saturate(180%);
+            
+            /* --- Luz & Ação --- */
+            --live-accent: #00e800;
+            --live-accent-dim: rgba(0, 232, 0, 0.15);
+            --kinetic-gradient: linear-gradient(90deg, #ffffff 0%, #cccccc 50%, #00e800 100%);
+            
+            /* --- Tipografia & Cores --- */
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--live-deep);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: var(--kinetic-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header-content .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-badge {
+            background: var(--live-accent-dim);
+            color: var(--live-accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--live-accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: var(--live-glass);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--live-accent);
+            background: var(--live-glass-hover);
+            box-shadow: 0 10px 30px -10px rgba(0, 232, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--live-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            color: var(--live-accent);
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .card-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-value.highlight {
+            color: var(--live-accent);
+            text-shadow: 0 0 20px rgba(0, 232, 0, 0.2);
+        }
+
+        /* Charts Section */
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--text-main);
+            border-left: 4px solid var(--live-accent);
+            padding-left: 16px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: rgba(6, 25, 42, 0.6); /* Slightly darker/transparent for chart contrast */
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            height: 350px; /* Fixed height for consistency */
+            position: relative;
+        }
+
+        .chart-card.full-width {
+            grid-column: span 2;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* --- Table Styling (New) --- */
+        .table-container {
+            background: var(--live-glass);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden; /* For rounded corners */
+            overflow-x: auto; /* Responsive scroll */
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px; /* Force scroll on small screens */
+        }
+
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: rgba(6, 25, 42, 0.8);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        .text-accent {
+            color: var(--live-accent);
+            font-weight: 600;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.material {
+            background: rgba(0, 122, 204, 0.15);
+            color: #007acc;
+            border: 1px solid rgba(0, 122, 204, 0.3);
+        }
+
+        .badge.mão-de-obra {
+            background: rgba(0, 232, 0, 0.1);
+            color: #00e800;
+            border: 1px solid rgba(0, 232, 0, 0.3);
+        }
+
+        .badge.serviço {
+            background: rgba(255, 0, 127, 0.15);
+            color: #ff007f;
+            border: 1px solid rgba(255, 0, 127, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-card.full-width {
+                grid-column: span 1;
+            }
+            h1 { font-size: 2rem; }
+            .card-value { font-size: 1.6rem; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Reforma - Janeiro 2026</h1>
+                <p class="subtitle"><i data-lucide="building-2" size="16"></i> Relatório de Investimentos & Benfeitorias</p>
+            </div>
+            <div class="header-badge">
+                <i data-lucide="check-circle" size="14"></i> Status: Em Execução
+            </div>
+        </header>
+
+        <!-- KPI Cards -->
+        <section class="kpi-grid">
+            <div class="card">
+                <div class="card-icon"><i data-lucide="wallet" size="24"></i></div>
+                <span class="card-label">Investimento Total</span>
+                <span class="card-value highlight">R$ 28.973,47</span>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="hammer" size="24"></i></div>
+                <span class="card-label">Mão de Obra</span>
+                <span class="card-value">R$ 12.500,00</span>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="package" size="24"></i></div>
+                <span class="card-label">Materiais</span>
+                <span class="card-value">R$ 13.793,47</span>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="zap" size="24"></i></div>
+                <span class="card-label">Serviços/Outros</span>
+                <span class="card-value">R$ 2.680,00</span>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section>
+            <h2><i data-lucide="pie-chart" size="24"></i> Análise Gráfica</h2>
+            
+            <div class="charts-grid">
+                <!-- Chart 1: Donut Distribution -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <span class="chart-title">Composição do Investimento</span>
+                    </div>
+                    <div style="height: 250px; position: relative; width: 100%;">
+                        <canvas id="chartDistribution"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Payment Status -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <span class="chart-title">Status Financeiro (Pago vs A Pagar)</span>
+                    </div>
+                    <div style="height: 250px; position: relative; width: 100%;">
+                        <canvas id="chartStatus"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Suppliers -->
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <span class="chart-title">Principais Parceiros e Fornecedores</span>
+                    </div>
+                    <div style="height: 250px; position: relative; width: 100%;">
+                        <canvas id="chartSuppliers"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Table Section -->
+        <section>
+            <h2><i data-lucide="list" size="24"></i> Detalhamento Financeiro</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Item / Serviço</th>
+                            <th>Fornecedor</th>
+                            <th>Valor Total</th>
+                            <th>Pago</th>
+                            <th>Em Aberto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Cemaco</td><td>R$ 357,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 357,00</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Cemaco</td><td>R$ 358,50</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 358,50</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Aquarelar </td><td>R$ 116,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 116,00</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Aquarelar </td><td>R$ 3.250,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 3.250,00</td></tr>
+                        <tr><td><span class='badge mão-de-obra'>Mão de obra</span></td><td>Junio</td><td>Lopes Construtora</td><td>R$ 9.500,00</td><td class='text-muted'>R$ 6.200,00</td><td class='text-accent'>R$ 3.300,00</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Compras Junio</td><td>R$ 350,50</td><td class='text-muted'>R$ 350,50</td><td class='text-accent'>R$ 0,00</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Chubeiros</td><td>Amazon</td><td>R$ 589,28</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 589,28</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Luminária</td><td>São Jorge</td><td>R$ 944,64</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 944,64</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Hidráulico e elétrico</td><td>Leroy Merlin</td><td>R$ 1.917,36</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 1.917,36</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Pedras</td><td>Marmorrocha - Luciano</td><td>R$ 4.278,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 4.278,00</td></tr>
+                        <tr><td><span class='badge mão-de-obra'>Mão de obra</span></td><td>Instalaçâo e restauração </td><td>Davi</td><td>R$ 3.000,00</td><td class='text-muted'>R$ 2.000,00</td><td class='text-accent'>R$ 1.000,00</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Revestimento de ardósia</td><td>-</td><td>R$ 280,00</td><td class='text-muted'>R$ 280,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Plotagem</td><td>Impacto Filmes</td><td>R$ 2.040,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 2.040,00</td></tr>
+                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Frete </td><td>Cemaco</td><td>R$ 80,00</td><td class='text-muted'>R$ 80,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Frete </td><td>Cemaco</td><td>R$ 80,00</td><td class='text-muted'>R$ 80,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Caçamba</td><td>Mundial Brasil Locações</td><td>R$ 480,00</td><td class='text-muted'>R$ 480,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Unitintas</td><td>R$ 369,20</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 369,20</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Lâmpadas</td><td>Shopee</td><td>R$ 469,08</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 469,08</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Puxadores</td><td>Shopee</td><td>R$ 234,25</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 234,25</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Argamassa</td><td>Cemaco</td><td>R$ 108,52</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 108,52</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Módulo de tomadas</td><td>Leroy Merlin</td><td>R$ 89,20</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 89,20</td></tr>
+                        <tr><td><span class='badge material'>Material</span></td><td>Argamassa</td><td>Cemaco</td><td>R$ 81,94</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 81,94</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <i data-lucide="file-check" size="16"></i>
+            <p>Relatório gerado em 16/01/2026 • Documento confidencial para uso administrativo.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Chart.js Global Defaults for "Live" Theme
+        Chart.defaults.color = '#ffffff';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = "'Segoe UI', 'Roboto', sans-serif";
+        
+        const accentColor = '#00e800';
+        const secondaryColor = '#007acc';
+        const tertiaryColor = '#ffffff';
+
+        // --- Data extracted from Analysis ---
+        const dataCategories = [13793.47, 12500.00, 2680.00]; // Materiais, Mão de Obra, Serviços
+        const labelsCategories = ['Materiais', 'Mão de Obra', 'Serviços'];
+
+        const dataStatus = [9470.50, 19502.97]; // Pago, Em Aberto
+        const labelsStatus = ['Já Pago (PIX/Débito)', 'A Pagar / Cartão Futuro'];
+
+        const dataSuppliers = [9500, 4278, 3366, 3000, 2040, 1917, 589]; // Top suppliers values
+        const labelsSuppliers = ['Lopes Construtora', 'Marmorrocha', 'Aquarelar', 'Davi (Instalações)', 'Impacto Filmes', 'Leroy Merlin', 'Amazon'];
+
+        // --- Chart 1: Distribution (Donut) ---
+        new Chart(document.getElementById('chartDistribution'), {
+            type: 'doughnut',
+            data: {
+                labels: labelsCategories,
+                datasets: [{
+                    data: dataCategories,
+                    backgroundColor: [tertiaryColor, accentColor, secondaryColor],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { boxWidth: 15, padding: 20, color: 'rgba(255,255,255,0.8)' }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // --- Chart 2: Status (Horizontal Bar - Simplified for visual impact) ---
+        new Chart(document.getElementById('chartStatus'), {
+            type: 'bar',
+            data: {
+                labels: labelsStatus,
+                datasets: [{
+                    label: 'Valor (R$)',
+                    data: dataStatus,
+                    backgroundColor: [accentColor, 'rgba(255, 255, 255, 0.2)'],
+                    borderRadius: 6,
+                    barThickness: 40
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Horizontal bar
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { display: true, color: 'rgba(255,255,255,0.05)' }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- Chart 3: Suppliers (Bar) ---
+        new Chart(document.getElementById('chartSuppliers'), {
+            type: 'bar',
+            data: {
+                labels: labelsSuppliers,
+                datasets: [{
+                    label: 'Investimento (R$)',
+                    data: dataSuppliers,
+                    backgroundColor: accentColor,
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: {
+                            callback: function(value) {
+                                return 'R$ ' + value/1000 + 'k';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
