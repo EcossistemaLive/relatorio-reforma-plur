@@ -12,24 +12,16 @@
     <style>
         /* --- Live Style Guide --- */
         :root {
-            /* --- Atmosfera (Backgrounds) --- */
             --live-deep: #06192a;
-            
-            /* --- Superfícies (Refractive Glass) --- */
             --live-glass: rgba(10, 36, 61, 0.70);
             --live-glass-hover: rgba(15, 45, 75, 0.85);
             --glass-blur: blur(16px) saturate(180%);
-            
-            /* --- Luz & Ação --- */
             --live-accent: #00e800;
             --live-accent-dim: rgba(0, 232, 0, 0.15);
             --kinetic-gradient: linear-gradient(90deg, #ffffff 0%, #cccccc 50%, #00e800 100%);
-            
-            /* --- Tipografia & Cores --- */
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.6);
             --border-subtle: rgba(255, 255, 255, 0.08);
-            
             --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
@@ -51,7 +43,7 @@
 
         /* Header */
         header {
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             border-bottom: 1px solid var(--border-subtle);
             padding-bottom: 20px;
             display: flex;
@@ -93,6 +85,49 @@
             gap: 8px;
         }
 
+        /* --- Tabs Navigation --- */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 1px; /* To overlap border */
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .tab-btn.active {
+            color: var(--live-accent);
+            border-bottom-color: var(--live-accent);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         /* KPI Cards */
         .kpi-grid {
             display: grid;
@@ -117,22 +152,6 @@
             border-color: var(--live-accent);
             background: var(--live-glass-hover);
             box-shadow: 0 10px 30px -10px rgba(0, 232, 0, 0.15);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--live-accent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .card:hover::before {
-            opacity: 1;
         }
 
         .card-icon {
@@ -161,6 +180,35 @@
             text-shadow: 0 0 20px rgba(0, 232, 0, 0.2);
         }
 
+        /* Note Card */
+        .note-card {
+            background: rgba(0, 232, 0, 0.05);
+            border: 1px solid rgba(0, 232, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .note-icon {
+            color: var(--live-accent);
+            flex-shrink: 0;
+        }
+
+        .note-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+            color: var(--live-accent);
+        }
+
+        .note-content p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         /* Charts Section */
         h2 {
             display: flex;
@@ -181,11 +229,11 @@
         }
 
         .chart-card {
-            background: rgba(6, 25, 42, 0.6); /* Slightly darker/transparent for chart contrast */
+            background: rgba(6, 25, 42, 0.6);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             padding: 24px;
-            height: 350px; /* Fixed height for consistency */
+            height: 350px;
             position: relative;
         }
 
@@ -206,21 +254,21 @@
             color: #fff;
         }
 
-        /* --- Table Styling (New) --- */
+        /* Table Styling */
         .table-container {
             background: var(--live-glass);
             backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
-            overflow: hidden; /* For rounded corners */
-            overflow-x: auto; /* Responsive scroll */
+            overflow: hidden;
+            overflow-x: auto;
             margin-bottom: 40px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 800px; /* Force scroll on small screens */
+            min-width: 800px;
         }
 
         th, td {
@@ -247,16 +295,9 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
-        .text-muted {
-            color: var(--text-muted);
-        }
-
-        .text-accent {
-            color: var(--live-accent);
-            font-weight: 600;
-        }
-
-        /* Badges */
+        .text-muted { color: var(--text-muted); }
+        .text-accent { color: var(--live-accent); font-weight: 600; }
+        
         .badge {
             display: inline-block;
             padding: 4px 10px;
@@ -266,24 +307,9 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
-        .badge.material {
-            background: rgba(0, 122, 204, 0.15);
-            color: #007acc;
-            border: 1px solid rgba(0, 122, 204, 0.3);
-        }
-
-        .badge.mão-de-obra {
-            background: rgba(0, 232, 0, 0.1);
-            color: #00e800;
-            border: 1px solid rgba(0, 232, 0, 0.3);
-        }
-
-        .badge.serviço {
-            background: rgba(255, 0, 127, 0.15);
-            color: #ff007f;
-            border: 1px solid rgba(255, 0, 127, 0.3);
-        }
+        .badge.material { background: rgba(0, 122, 204, 0.15); color: #007acc; border: 1px solid rgba(0, 122, 204, 0.3); }
+        .badge.mão-de-obra { background: rgba(0, 232, 0, 0.1); color: #00e800; border: 1px solid rgba(0, 232, 0, 0.3); }
+        .badge.serviço { background: rgba(255, 0, 127, 0.15); color: #ff007f; border: 1px solid rgba(255, 0, 127, 0.3); }
 
         /* Footer */
         footer {
@@ -299,14 +325,9 @@
             gap: 10px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-            .chart-card.full-width {
-                grid-column: span 1;
-            }
+            .charts-grid { grid-template-columns: 1fr; }
+            .chart-card.full-width { grid-column: span 1; }
             h1 { font-size: 2rem; }
             .card-value { font-size: 1.6rem; }
         }
@@ -330,109 +351,177 @@
             </div>
         </header>
 
-        <!-- KPI Cards -->
-        <section class="kpi-grid">
-            <div class="card">
-                <div class="card-icon"><i data-lucide="wallet" size="24"></i></div>
-                <span class="card-label">Investimento Total</span>
-                <span class="card-value highlight">R$ 28.973,47</span>
-            </div>
-            <div class="card">
-                <div class="card-icon"><i data-lucide="hammer" size="24"></i></div>
-                <span class="card-label">Mão de Obra</span>
-                <span class="card-value">R$ 12.500,00</span>
-            </div>
-            <div class="card">
-                <div class="card-icon"><i data-lucide="package" size="24"></i></div>
-                <span class="card-label">Materiais</span>
-                <span class="card-value">R$ 13.793,47</span>
-            </div>
-            <div class="card">
-                <div class="card-icon"><i data-lucide="zap" size="24"></i></div>
-                <span class="card-label">Serviços/Outros</span>
-                <span class="card-value">R$ 2.680,00</span>
-            </div>
-        </section>
+        <!-- Tabs Navigation -->
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="openTab('geral')">
+                <i data-lucide="layout-dashboard" size="18"></i> Visão Geral
+            </button>
+            <button class="tab-btn" onclick="openTab('abatimento')">
+                <i data-lucide="banknote" size="18"></i> Abatimento de Aluguel
+            </button>
+        </nav>
 
-        <!-- Charts Section -->
-        <section>
-            <h2><i data-lucide="pie-chart" size="24"></i> Análise Gráfica</h2>
+        <!-- TAB 1: VISÃO GERAL -->
+        <div id="geral" class="tab-content active">
+            <!-- KPI Cards -->
+            <section class="kpi-grid">
+                <div class="card">
+                    <div class="card-icon"><i data-lucide="wallet" size="24"></i></div>
+                    <span class="card-label">Investimento Total</span>
+                    <span class="card-value highlight">R$ 28.973,47</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i data-lucide="hammer" size="24"></i></div>
+                    <span class="card-label">Mão de Obra</span>
+                    <span class="card-value">R$ 12.500,00</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i data-lucide="package" size="24"></i></div>
+                    <span class="card-label">Materiais</span>
+                    <span class="card-value">R$ 13.793,47</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i data-lucide="zap" size="24"></i></div>
+                    <span class="card-label">Serviços/Outros</span>
+                    <span class="card-value">R$ 2.680,00</span>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section>
+                <h2><i data-lucide="pie-chart" size="24"></i> Análise Gráfica</h2>
+                
+                <div class="charts-grid">
+                    <!-- Chart 1: Donut Distribution -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">Composição do Investimento</span>
+                        </div>
+                        <div style="height: 250px; position: relative; width: 100%;">
+                            <canvas id="chartDistribution"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Payment Status -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">Status Financeiro (Pago vs A Pagar)</span>
+                        </div>
+                        <div style="height: 250px; position: relative; width: 100%;">
+                            <canvas id="chartStatus"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3: Suppliers -->
+                    <div class="chart-card full-width">
+                        <div class="chart-header">
+                            <span class="chart-title">Principais Parceiros e Fornecedores</span>
+                        </div>
+                        <div style="height: 250px; position: relative; width: 100%;">
+                            <canvas id="chartSuppliers"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed Table Section -->
+            <section>
+                <h2><i data-lucide="list" size="24"></i> Detalhamento Financeiro</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Item / Serviço</th>
+                                <th>Fornecedor</th>
+                                <th>Valor Total</th>
+                                <th>Pago</th>
+                                <th>Em Aberto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Cemaco</td><td>R$ 357,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 357,00</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Cemaco</td><td>R$ 358,50</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 358,50</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Aquarelar </td><td>R$ 116,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 116,00</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Aquarelar </td><td>R$ 3.250,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 3.250,00</td></tr>
+                            <tr><td><span class='badge mão-de-obra'>Mão de obra</span></td><td>Junio</td><td>Lopes Construtora</td><td>R$ 9.500,00</td><td class='text-muted'>R$ 6.200,00</td><td class='text-accent'>R$ 3.300,00</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Compras Junio</td><td>R$ 350,50</td><td class='text-muted'>R$ 350,50</td><td class='text-accent'>R$ 0,00</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Chubeiros</td><td>Amazon</td><td>R$ 589,28</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 589,28</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Luminária</td><td>São Jorge</td><td>R$ 944,64</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 944,64</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Hidráulico e elétrico</td><td>Leroy Merlin</td><td>R$ 1.917,36</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 1.917,36</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Pedras</td><td>Marmorrocha - Luciano</td><td>R$ 4.278,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 4.278,00</td></tr>
+                            <tr><td><span class='badge mão-de-obra'>Mão de obra</span></td><td>Instalaçâo e restauração </td><td>Davi</td><td>R$ 3.000,00</td><td class='text-muted'>R$ 2.000,00</td><td class='text-accent'>R$ 1.000,00</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Revestimento de ardósia</td><td>-</td><td>R$ 280,00</td><td class='text-muted'>R$ 280,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                            <tr><td><span class='badge serviço'>Serviço</span></td><td>Plotagem</td><td>Impacto Filmes</td><td>R$ 2.040,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 2.040,00</td></tr>
+                            <tr><td><span class='badge serviço'>Serviço</span></td><td>Frete </td><td>Cemaco</td><td>R$ 80,00</td><td class='text-muted'>R$ 80,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                            <tr><td><span class='badge serviço'>Serviço</span></td><td>Frete </td><td>Cemaco</td><td>R$ 80,00</td><td class='text-muted'>R$ 80,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                            <tr><td><span class='badge serviço'>Serviço</span></td><td>Caçamba</td><td>Mundial Brasil Locações</td><td>R$ 480,00</td><td class='text-muted'>R$ 480,00</td><td class='text-accent'>R$ 0,00</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Unitintas</td><td>R$ 369,20</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 369,20</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Lâmpadas</td><td>Shopee</td><td>R$ 469,08</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 469,08</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Puxadores</td><td>Shopee</td><td>R$ 234,25</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 234,25</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Argamassa</td><td>Cemaco</td><td>R$ 108,52</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 108,52</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Módulo de tomadas</td><td>Leroy Merlin</td><td>R$ 89,20</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 89,20</td></tr>
+                            <tr><td><span class='badge material'>Material</span></td><td>Argamassa</td><td>Cemaco</td><td>R$ 81,94</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 81,94</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 2: ABATIMENTO ALUGUEL (NEW) -->
+        <div id="abatimento" class="tab-content">
             
-            <div class="charts-grid">
-                <!-- Chart 1: Donut Distribution -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <span class="chart-title">Composição do Investimento</span>
-                    </div>
-                    <div style="height: 250px; position: relative; width: 100%;">
-                        <canvas id="chartDistribution"></canvas>
-                    </div>
+            <div class="note-card">
+                <div class="note-icon"><i data-lucide="alert-circle" size="28"></i></div>
+                <div class="note-content">
+                    <h3>Nota Importante sobre o Fluxo de Caixa</h3>
+                    <p>O valor total mensal apresentado abaixo representa o montante exato a ser <strong>abatido do valor do aluguel</strong>. 
+                    <br><em>Atenção: Nos meses futuros, pode ser que tenhamos novos gastos e ajustes na obra. Este painel será atualizado conforme novas despesas forem integradas.</em></p>
                 </div>
+            </div>
 
-                <!-- Chart 2: Payment Status -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <span class="chart-title">Status Financeiro (Pago vs A Pagar)</span>
-                    </div>
-                    <div style="height: 250px; position: relative; width: 100%;">
-                        <canvas id="chartStatus"></canvas>
-                    </div>
-                </div>
-
-                <!-- Chart 3: Suppliers -->
+            <section class="charts-grid">
+                <!-- Chart 4: Monthly Deductions -->
                 <div class="chart-card full-width">
                     <div class="chart-header">
-                        <span class="chart-title">Principais Parceiros e Fornecedores</span>
+                        <span class="chart-title">Cronograma de Abatimento (Saída de Caixa Mensal)</span>
                     </div>
-                    <div style="height: 250px; position: relative; width: 100%;">
-                        <canvas id="chartSuppliers"></canvas>
+                    <div style="height: 300px; position: relative; width: 100%;">
+                        <canvas id="chartDeduction"></canvas>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Detailed Table Section -->
-        <section>
-            <h2><i data-lucide="list" size="24"></i> Detalhamento Financeiro</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Categoria</th>
-                            <th>Item / Serviço</th>
-                            <th>Fornecedor</th>
-                            <th>Valor Total</th>
-                            <th>Pago</th>
-                            <th>Em Aberto</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Cemaco</td><td>R$ 357,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 357,00</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Cemaco</td><td>R$ 358,50</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 358,50</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Aquarelar </td><td>R$ 116,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 116,00</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Aquarelar </td><td>R$ 3.250,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 3.250,00</td></tr>
-                        <tr><td><span class='badge mão-de-obra'>Mão de obra</span></td><td>Junio</td><td>Lopes Construtora</td><td>R$ 9.500,00</td><td class='text-muted'>R$ 6.200,00</td><td class='text-accent'>R$ 3.300,00</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Insumos Obra</td><td>Compras Junio</td><td>R$ 350,50</td><td class='text-muted'>R$ 350,50</td><td class='text-accent'>R$ 0,00</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Chubeiros</td><td>Amazon</td><td>R$ 589,28</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 589,28</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Luminária</td><td>São Jorge</td><td>R$ 944,64</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 944,64</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Hidráulico e elétrico</td><td>Leroy Merlin</td><td>R$ 1.917,36</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 1.917,36</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Pedras</td><td>Marmorrocha - Luciano</td><td>R$ 4.278,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 4.278,00</td></tr>
-                        <tr><td><span class='badge mão-de-obra'>Mão de obra</span></td><td>Instalaçâo e restauração </td><td>Davi</td><td>R$ 3.000,00</td><td class='text-muted'>R$ 2.000,00</td><td class='text-accent'>R$ 1.000,00</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Revestimento de ardósia</td><td>-</td><td>R$ 280,00</td><td class='text-muted'>R$ 280,00</td><td class='text-accent'>R$ 0,00</td></tr>
-                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Plotagem</td><td>Impacto Filmes</td><td>R$ 2.040,00</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 2.040,00</td></tr>
-                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Frete </td><td>Cemaco</td><td>R$ 80,00</td><td class='text-muted'>R$ 80,00</td><td class='text-accent'>R$ 0,00</td></tr>
-                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Frete </td><td>Cemaco</td><td>R$ 80,00</td><td class='text-muted'>R$ 80,00</td><td class='text-accent'>R$ 0,00</td></tr>
-                        <tr><td><span class='badge serviço'>Serviço</span></td><td>Caçamba</td><td>Mundial Brasil Locações</td><td>R$ 480,00</td><td class='text-muted'>R$ 480,00</td><td class='text-accent'>R$ 0,00</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Tintas</td><td>Unitintas</td><td>R$ 369,20</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 369,20</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Lâmpadas</td><td>Shopee</td><td>R$ 469,08</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 469,08</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Puxadores</td><td>Shopee</td><td>R$ 234,25</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 234,25</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Argamassa</td><td>Cemaco</td><td>R$ 108,52</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 108,52</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Módulo de tomadas</td><td>Leroy Merlin</td><td>R$ 89,20</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 89,20</td></tr>
-                        <tr><td><span class='badge material'>Material</span></td><td>Argamassa</td><td>Cemaco</td><td>R$ 81,94</td><td class='text-muted'>R$ 0,00</td><td class='text-accent'>R$ 81,94</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+            <section>
+                <h2><i data-lucide="calendar-check" size="24"></i> Detalhamento Mensal</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mês de Referência</th>
+                                <th>Status do Pagamento</th>
+                                <th>Valor a Abater do Aluguel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="badge material">dez./2025</span></td><td class="text-muted">Processado</td><td class="text-main">R$ 0,00</td></tr>
+                            <tr><td><span class="badge mão-de-obra">jan./2026</span></td><td class="text-accent">A Pagar</td><td class="text-accent">R$ 3.829,31</td></tr>
+                            <tr><td><span class="badge mão-de-obra">fev./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 4.150,23</td></tr>
+                            <tr><td><span class="badge mão-de-obra">mar./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 3.911,03</td></tr>
+                            <tr><td><span class="badge mão-de-obra">abr./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 2.011,59</td></tr>
+                            <tr><td><span class="badge mão-de-obra">mai./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 1.854,84</td></tr>
+                            <tr><td><span class="badge mão-de-obra">jun./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 1.446,84</td></tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: rgba(0, 232, 0, 0.05);">
+                                <td colspan="2" style="text-align: right; font-weight: bold;">PREVISÃO ACUMULADA (Jan-Jun):</td>
+                                <td class="text-accent" style="font-size: 1.1rem;">R$ 17.203,84</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+        </div>
 
         <footer>
             <i data-lucide="file-check" size="16"></i>
@@ -444,7 +533,33 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Chart.js Global Defaults for "Live" Theme
+        // --- Tab Logic ---
+        function openTab(tabName) {
+            // Hide all tab content
+            const contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].style.display = "none";
+                contents[i].classList.remove("active");
+            }
+
+            // Remove active class from buttons
+            const buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+
+            // Show specific tab
+            document.getElementById(tabName).style.display = "block";
+            // Add fade animation reset
+            document.getElementById(tabName).style.animation = 'none';
+            document.getElementById(tabName).offsetHeight; /* trigger reflow */
+            document.getElementById(tabName).style.animation = 'fadeIn 0.5s ease-out';
+            
+            // Highlight button
+            event.currentTarget.classList.add("active");
+        }
+
+        // --- Chart.js Configuration ---
         Chart.defaults.color = '#ffffff';
         Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
         Chart.defaults.font.family = "'Segoe UI', 'Roboto', sans-serif";
@@ -453,17 +568,20 @@
         const secondaryColor = '#007acc';
         const tertiaryColor = '#ffffff';
 
-        // --- Data extracted from Analysis ---
-        const dataCategories = [13793.47, 12500.00, 2680.00]; // Materiais, Mão de Obra, Serviços
+        // Data for Tab 1
+        const dataCategories = [13793.47, 12500.00, 2680.00];
         const labelsCategories = ['Materiais', 'Mão de Obra', 'Serviços'];
-
-        const dataStatus = [9470.50, 19502.97]; // Pago, Em Aberto
+        const dataStatus = [9470.50, 19502.97];
         const labelsStatus = ['Já Pago (PIX/Débito)', 'A Pagar / Cartão Futuro'];
-
-        const dataSuppliers = [9500, 4278, 3366, 3000, 2040, 1917, 589]; // Top suppliers values
+        const dataSuppliers = [9500, 4278, 3366, 3000, 2040, 1917, 589];
         const labelsSuppliers = ['Lopes Construtora', 'Marmorrocha', 'Aquarelar', 'Davi (Instalações)', 'Impacto Filmes', 'Leroy Merlin', 'Amazon'];
 
-        // --- Chart 1: Distribution (Donut) ---
+        // Data for Tab 2 (Abatimento)
+        // From Planilha PLUR: Dec 25 to Jun 26
+        const labelsDeduction = ['Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26'];
+        const dataDeduction = [0.00, 3829.31, 4150.23, 3911.03, 2011.59, 1854.84, 1446.84];
+
+        // Chart 1: Distribution
         new Chart(document.getElementById('chartDistribution'), {
             type: 'doughnut',
             data: {
@@ -478,17 +596,12 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: { boxWidth: 15, padding: 20, color: 'rgba(255,255,255,0.8)' }
-                    }
-                },
+                plugins: { legend: { position: 'right', labels: { boxWidth: 15, padding: 20, color: 'rgba(255,255,255,0.8)' } } },
                 cutout: '65%'
             }
         });
 
-        // --- Chart 2: Status (Horizontal Bar - Simplified for visual impact) ---
+        // Chart 2: Status
         new Chart(document.getElementById('chartStatus'), {
             type: 'bar',
             data: {
@@ -502,24 +615,15 @@
                 }]
             },
             options: {
-                indexAxis: 'y', // Horizontal bar
+                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: {
-                        grid: { display: true, color: 'rgba(255,255,255,0.05)' }
-                    },
-                    y: {
-                        grid: { display: false }
-                    }
-                }
+                plugins: { legend: { display: false } },
+                scales: { x: { grid: { display: true, color: 'rgba(255,255,255,0.05)' } }, y: { grid: { display: false } } }
             }
         });
 
-        // --- Chart 3: Suppliers (Bar) ---
+        // Chart 3: Suppliers
         new Chart(document.getElementById('chartSuppliers'), {
             type: 'bar',
             data: {
@@ -535,35 +639,56 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { callback: function(value) { return 'R$ ' + value/1000 + 'k'; } } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Chart 4: Deduction (Line/Bar Combo) - Tab 2
+        new Chart(document.getElementById('chartDeduction'), {
+            type: 'line',
+            data: {
+                labels: labelsDeduction,
+                datasets: [{
+                    label: 'Valor a Abater (R$)',
+                    data: dataDeduction,
+                    borderColor: accentColor,
+                    backgroundColor: 'rgba(0, 232, 0, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: accentColor,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: { display: false },
                     tooltip: {
+                        backgroundColor: 'rgba(6, 25, 42, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
                         callbacks: {
                             label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
-                                }
-                                return label;
+                                return 'Abatimento: ' + new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
                             }
                         }
                     }
                 },
                 scales: {
                     y: {
+                        beginAtZero: true,
                         grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: {
-                            callback: function(value) {
-                                return 'R$ ' + value/1000 + 'k';
-                            }
-                        }
+                        ticks: { callback: function(value) { return 'R$ ' + value; } }
                     },
-                    x: {
-                        grid: { display: false }
-                    }
+                    x: { grid: { display: false } }
                 }
             }
         });
