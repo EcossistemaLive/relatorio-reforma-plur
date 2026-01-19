@@ -91,7 +91,7 @@
             gap: 10px;
             margin-bottom: 30px;
             border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 1px; /* To overlap border */
+            padding-bottom: 1px;
         }
 
         .tab-btn {
@@ -295,6 +295,7 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
+        .text-main { color: var(--text-main); font-weight: 500; }
         .text-muted { color: var(--text-muted); }
         .text-accent { color: var(--live-accent); font-weight: 600; }
         
@@ -475,8 +476,8 @@
                 <div class="note-icon"><i data-lucide="alert-circle" size="28"></i></div>
                 <div class="note-content">
                     <h3>Nota Importante sobre o Fluxo de Caixa</h3>
-                    <p>O valor total mensal apresentado abaixo representa o montante exato a ser <strong>abatido do valor do aluguel</strong>. 
-                    <br><em>Atenção: Nos meses futuros, pode ser que tenhamos novos gastos e ajustes na obra. Este painel será atualizado conforme novas despesas forem integradas.</em></p>
+                    <p>Os valores de <strong>Jan a Out/2026</strong> foram auditados e conferidos com o arquivo original "Planilha PLUR".<br>
+                    Os valores futuros representam as parcelas já programadas. Novos gastos com mão de obra ou materiais poderão ser integrados conforme a evolução da obra.</p>
                 </div>
             </div>
 
@@ -511,11 +512,16 @@
                             <tr><td><span class="badge mão-de-obra">abr./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 2.011,59</td></tr>
                             <tr><td><span class="badge mão-de-obra">mai./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 1.854,84</td></tr>
                             <tr><td><span class="badge mão-de-obra">jun./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 1.446,84</td></tr>
+                            <!-- NOVOS MESES ADICIONADOS (CONFIRMADOS NO ARQUIVO) -->
+                            <tr><td><span class="badge serviço">jul./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 641,38</td></tr>
+                            <tr><td><span class="badge serviço">ago./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 574,37</td></tr>
+                            <tr><td><span class="badge serviço">set./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 94,46</td></tr>
+                            <tr><td><span class="badge serviço">out./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 94,46</td></tr>
                         </tbody>
                         <tfoot>
                             <tr style="background: rgba(0, 232, 0, 0.05);">
-                                <td colspan="2" style="text-align: right; font-weight: bold;">PREVISÃO ACUMULADA (Jan-Jun):</td>
-                                <td class="text-accent" style="font-size: 1.1rem;">R$ 17.203,84</td>
+                                <td colspan="2" style="text-align: right; font-weight: bold;">PREVISÃO ACUMULADA (Jan-Out):</td>
+                                <td class="text-accent" style="font-size: 1.1rem;">R$ 18.608,51</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -525,7 +531,7 @@
 
         <footer>
             <i data-lucide="file-check" size="16"></i>
-            <p>Relatório gerado em 16/01/2026 • Documento confidencial para uso administrativo.</p>
+            <p>Relatório gerado em 19/01/2026 • Documento confidencial para uso administrativo.</p>
         </footer>
     </div>
 
@@ -576,10 +582,9 @@
         const dataSuppliers = [9500, 4278, 3366, 3000, 2040, 1917, 589];
         const labelsSuppliers = ['Lopes Construtora', 'Marmorrocha', 'Aquarelar', 'Davi (Instalações)', 'Impacto Filmes', 'Leroy Merlin', 'Amazon'];
 
-        // Data for Tab 2 (Abatimento)
-        // From Planilha PLUR: Dec 25 to Jun 26
-        const labelsDeduction = ['Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26'];
-        const dataDeduction = [0.00, 3829.31, 4150.23, 3911.03, 2011.59, 1854.84, 1446.84];
+        // Data for Tab 2 (Abatimento) - UPDATED UP TO OCT 2026 WITH CONFIRMED FILE DATA
+        const labelsDeduction = ['Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26', 'Jul/26', 'Ago/26', 'Set/26', 'Out/26'];
+        const dataDeduction = [0.00, 3829.31, 4150.23, 3911.03, 2011.59, 1854.84, 1446.84, 641.38, 574.37, 94.46, 94.46];
 
         // Chart 1: Distribution
         new Chart(document.getElementById('chartDistribution'), {
