@@ -72,6 +72,13 @@
             gap: 8px;
         }
 
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         .header-badge {
             background: var(--live-accent-dim);
             color: var(--live-accent);
@@ -83,6 +90,30 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+
+        /* New Button Style */
+        .btn-primary {
+            background: var(--live-accent);
+            color: #06192a; /* Dark text for contrast */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 0 15px var(--live-accent-dim);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 232, 0, 0.4);
+            background: #33ff33;
         }
 
         /* --- Tabs Navigation --- */
@@ -331,6 +362,7 @@
             .chart-card.full-width { grid-column: span 1; }
             h1 { font-size: 2rem; }
             .card-value { font-size: 1.6rem; }
+            .header-actions { margin-top: 15px; }
         }
 
         @keyframes fadeIn {
@@ -347,8 +379,13 @@
                 <h1>Reforma - Janeiro 2026</h1>
                 <p class="subtitle"><i data-lucide="building-2" size="16"></i> Relatório de Investimentos & Benfeitorias</p>
             </div>
-            <div class="header-badge">
-                <i data-lucide="check-circle" size="14"></i> Status: Em Execução
+            <div class="header-actions">
+                <a href="https://github.com/EcossistemaLive/relatorio-reforma-plur/blob/main/Reforma%202026%20-%20Comprovantes.pdf" target="_blank" class="btn-primary">
+                    <i data-lucide="file-text" size="18"></i> Ver Comprovantes (PDF)
+                </a>
+                <div class="header-badge">
+                    <i data-lucide="check-circle" size="14"></i> Status: Em Execução
+                </div>
             </div>
         </header>
 
