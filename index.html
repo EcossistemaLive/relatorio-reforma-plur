@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reforma - Janeiro 2026</title>
+    <title>Reforma - Memorial Descritivo 2026</title>
     <!-- Carregando Chart.js para gráficos interativos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Carregando Lucide Icons -->
@@ -92,10 +92,9 @@
             gap: 8px;
         }
 
-        /* New Button Style */
         .btn-primary {
             background: var(--live-accent);
-            color: #06192a; /* Dark text for contrast */
+            color: #06192a;
             border: none;
             padding: 10px 20px;
             border-radius: 30px;
@@ -123,6 +122,7 @@
             margin-bottom: 30px;
             border-bottom: 1px solid var(--border-subtle);
             padding-bottom: 1px;
+            overflow-x: auto;
         }
 
         .tab-btn {
@@ -138,6 +138,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
 
         .tab-btn:hover {
@@ -159,14 +160,7 @@
             display: block;
         }
 
-        /* KPI Cards */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin-bottom: 50px;
-        }
-
+        /* General Card Styles */
         .card {
             background: var(--live-glass);
             backdrop-filter: var(--glass-blur);
@@ -182,33 +176,70 @@
             transform: translateY(-5px);
             border-color: var(--live-accent);
             background: var(--live-glass-hover);
-            box-shadow: 0 10px 30px -10px rgba(0, 232, 0, 0.15);
         }
 
-        .card-icon {
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+        .card-icon { color: var(--live-accent); margin-bottom: 15px; opacity: 0.8; }
+        .card-label { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+        .card-value { font-size: 2rem; font-weight: 700; color: var(--text-main); }
+        .card-value.highlight { color: var(--live-accent); text-shadow: 0 0 20px rgba(0, 232, 0, 0.2); }
+
+        /* Memorial Styles */
+        .memorial-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .memorial-card {
+            background: rgba(6, 25, 42, 0.4);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .memorial-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .memorial-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
             color: var(--live-accent);
-            margin-bottom: 15px;
-            opacity: 0.8;
         }
 
-        .card-label {
+        .memorial-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .memorial-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
             color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            display: block;
+            font-size: 0.95rem;
         }
 
-        .card-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .card-value.highlight {
+        .memorial-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
             color: var(--live-accent);
-            text-shadow: 0 0 20px rgba(0, 232, 0, 0.2);
+            font-weight: bold;
         }
 
         /* Note Card */
@@ -222,23 +253,9 @@
             gap: 15px;
             align-items: flex-start;
         }
-
-        .note-icon {
-            color: var(--live-accent);
-            flex-shrink: 0;
-        }
-
-        .note-content h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.1rem;
-            color: var(--live-accent);
-        }
-
-        .note-content p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+        .note-icon { color: var(--live-accent); flex-shrink: 0; }
+        .note-content h3 { margin: 0 0 5px 0; font-size: 1.1rem; color: var(--live-accent); }
+        .note-content p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
 
         /* Charts Section */
         h2 {
@@ -258,32 +275,10 @@
             gap: 24px;
             margin-bottom: 40px;
         }
-
-        .chart-card {
-            background: rgba(6, 25, 42, 0.6);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 24px;
-            height: 350px;
-            position: relative;
-        }
-
-        .chart-card.full-width {
-            grid-column: span 2;
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .chart-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-        }
+        .chart-card { background: rgba(6, 25, 42, 0.6); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; height: 350px; position: relative; }
+        .chart-card.full-width { grid-column: span 2; }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .chart-title { font-size: 1.1rem; font-weight: 600; color: #fff; }
 
         /* Table Styling */
         .table-container {
@@ -295,67 +290,21 @@
             overflow-x: auto;
             margin-bottom: 40px;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        th, td {
-            padding: 16px 20px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-subtle);
-            font-size: 0.9rem;
-        }
-
-        th {
-            background: rgba(6, 25, 42, 0.8);
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th, td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--border-subtle); font-size: 0.9rem; }
+        th { background: rgba(6, 25, 42, 0.8); color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(255, 255, 255, 0.03); }
         .text-main { color: var(--text-main); font-weight: 500; }
         .text-muted { color: var(--text-muted); }
         .text-accent { color: var(--live-accent); font-weight: 600; }
-        
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .badge.material { background: rgba(0, 122, 204, 0.15); color: #007acc; border: 1px solid rgba(0, 122, 204, 0.3); }
         .badge.mão-de-obra { background: rgba(0, 232, 0, 0.1); color: #00e800; border: 1px solid rgba(0, 232, 0, 0.3); }
         .badge.serviço { background: rgba(255, 0, 127, 0.15); color: #ff007f; border: 1px solid rgba(255, 0, 127, 0.3); }
 
         /* Footer */
-        footer {
-            margin-top: 80px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-subtle);
-            padding-top: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
+        footer { margin-top: 80px; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-subtle); padding-top: 24px; display: flex; justify-content: center; align-items: center; gap: 10px; }
 
         @media (max-width: 768px) {
             .charts-grid { grid-template-columns: 1fr; }
@@ -396,6 +345,9 @@
             </button>
             <button class="tab-btn" onclick="openTab('abatimento')">
                 <i data-lucide="banknote" size="18"></i> Abatimento de Aluguel
+            </button>
+            <button class="tab-btn" onclick="openTab('memorial')">
+                <i data-lucide="clipboard-list" size="18"></i> Memorial Descritivo
             </button>
         </nav>
 
@@ -506,9 +458,8 @@
             </section>
         </div>
 
-        <!-- TAB 2: ABATIMENTO ALUGUEL (NEW) -->
+        <!-- TAB 2: ABATIMENTO ALUGUEL -->
         <div id="abatimento" class="tab-content">
-            
             <div class="note-card">
                 <div class="note-icon"><i data-lucide="alert-circle" size="28"></i></div>
                 <div class="note-content">
@@ -549,7 +500,6 @@
                             <tr><td><span class="badge mão-de-obra">abr./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 2.011,59</td></tr>
                             <tr><td><span class="badge mão-de-obra">mai./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 1.854,84</td></tr>
                             <tr><td><span class="badge mão-de-obra">jun./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 1.446,84</td></tr>
-                            <!-- NOVOS MESES ADICIONADOS (CONFIRMADOS NO ARQUIVO) -->
                             <tr><td><span class="badge serviço">jul./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 641,38</td></tr>
                             <tr><td><span class="badge serviço">ago./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 574,37</td></tr>
                             <tr><td><span class="badge serviço">set./2026</span></td><td class="text-muted">Programado</td><td class="text-main">R$ 94,46</td></tr>
@@ -566,9 +516,77 @@
             </section>
         </div>
 
+        <!-- TAB 3: MEMORIAL DESCRITIVO (NEW) -->
+        <div id="memorial" class="tab-content">
+            <div class="note-card">
+                <div class="note-icon"><i data-lucide="clipboard-check" size="28"></i></div>
+                <div class="note-content">
+                    <h3>Escopo Técnico da Reforma</h3>
+                    <p>Este memorial detalha os serviços executados e materiais empregados, servindo como base para avaliação da valorização do imóvel e justificativa dos investimentos realizados.</p>
+                </div>
+            </div>
+
+            <section class="memorial-section">
+                <!-- CIVIL -->
+                <div class="memorial-card">
+                    <div class="memorial-header">
+                        <i data-lucide="bricks" size="24" color="#00e800"></i>
+                        <h3>Obras Civis & Estrutura</h3>
+                    </div>
+                    <ul class="memorial-list">
+                        <li>Remoção e descarte de entulho (Caçambas especializadas).</li>
+                        <li>Execução de serviços gerais de alvenaria e reparos estruturais.</li>
+                        <li>Fornecimento e aplicação de insumos básicos (Argamassa, cimento).</li>
+                        <li>Serviços de Mão de Obra especializada (Construtora Lopes).</li>
+                    </ul>
+                </div>
+
+                <!-- ACABAMENTOS -->
+                <div class="memorial-card">
+                    <div class="memorial-header">
+                        <i data-lucide="layers" size="24" color="#00e800"></i>
+                        <h3>Revestimentos & Acabamentos</h3>
+                    </div>
+                    <ul class="memorial-list">
+                        <li>Instalação de Bancadas em Pedra (Marmorrocha).</li>
+                        <li>Assentamento de revestimento em Ardósia.</li>
+                        <li>Restauração e acabamentos finos (Davi).</li>
+                        <li>Instalação de puxadores e ferragens de marcenaria.</li>
+                    </ul>
+                </div>
+
+                <!-- INSTALAÇÕES -->
+                <div class="memorial-card">
+                    <div class="memorial-header">
+                        <i data-lucide="zap" size="24" color="#00e800"></i>
+                        <h3>Elétrica & Hidráulica</h3>
+                    </div>
+                    <ul class="memorial-list">
+                        <li>Modernização de pontos elétricos e troca de módulos de tomadas (Leroy Merlin).</li>
+                        <li>Instalação de luminárias e projeto luminotécnico (São Jorge / Lâmpadas LED).</li>
+                        <li>Substituição e instalação de chuveiros (Amazon).</li>
+                        <li>Manutenção geral da rede hidráulica.</li>
+                    </ul>
+                </div>
+
+                <!-- PINTURA E VISUAL -->
+                <div class="memorial-card">
+                    <div class="memorial-header">
+                        <i data-lucide="paint-bucket" size="24" color="#00e800"></i>
+                        <h3>Pintura & Identidade Visual</h3>
+                    </div>
+                    <ul class="memorial-list">
+                        <li>Pintura geral interna e externa (Tintas Aquarelar / Unitintas).</li>
+                        <li>Serviços de plotagem e comunicação visual (Impacto Filmes).</li>
+                        <li>Preparação de superfícies e retoques finais.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
         <footer>
             <i data-lucide="file-check" size="16"></i>
-            <p>Relatório gerado em 19/01/2026 • Documento confidencial para uso administrativo.</p>
+            <p>Relatório gerado em 26/01/2026 • Documento confidencial para uso administrativo.</p>
         </footer>
     </div>
 
@@ -578,27 +596,23 @@
 
         // --- Tab Logic ---
         function openTab(tabName) {
-            // Hide all tab content
             const contents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < contents.length; i++) {
                 contents[i].style.display = "none";
                 contents[i].classList.remove("active");
             }
 
-            // Remove active class from buttons
             const buttons = document.getElementsByClassName("tab-btn");
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].classList.remove("active");
             }
 
-            // Show specific tab
             document.getElementById(tabName).style.display = "block";
-            // Add fade animation reset
+            // Animation Reset
             document.getElementById(tabName).style.animation = 'none';
-            document.getElementById(tabName).offsetHeight; /* trigger reflow */
+            document.getElementById(tabName).offsetHeight; /* reflow */
             document.getElementById(tabName).style.animation = 'fadeIn 0.5s ease-out';
             
-            // Highlight button
             event.currentTarget.classList.add("active");
         }
 
@@ -619,7 +633,7 @@
         const dataSuppliers = [9500, 4278, 3366, 3000, 2040, 1917, 589];
         const labelsSuppliers = ['Lopes Construtora', 'Marmorrocha', 'Aquarelar', 'Davi (Instalações)', 'Impacto Filmes', 'Leroy Merlin', 'Amazon'];
 
-        // Data for Tab 2 (Abatimento) - UPDATED UP TO OCT 2026 WITH CONFIRMED FILE DATA
+        // Data for Tab 2 (Abatimento)
         const labelsDeduction = ['Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26', 'Jul/26', 'Ago/26', 'Set/26', 'Out/26'];
         const dataDeduction = [0.00, 3829.31, 4150.23, 3911.03, 2011.59, 1854.84, 1446.84, 641.38, 574.37, 94.46, 94.46];
 
